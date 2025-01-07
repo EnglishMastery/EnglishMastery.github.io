@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>English Idioms Quiz</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      padding: 20px;
+      background-color: #FAEBD7; /* Light background color */
+      max-width: 1200px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-size: 36px;
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c3e50; /* Darker text color */
+      font-weight: 700; /* Bolder font weight */
+    }
+
+    .quiz-container {
+      margin-bottom: 40px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .question {
+      padding: 20px;
+      margin-bottom: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      text-align: center;
+      position: relative;
+    }
+
+    .question-title {
+        font-weight: bold;
+        color: #2c3e50;
+        font-size: 22px;
+        margin-bottom: 15px;
+      }
+
+    .question p {
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #2c3e50;
+      font-size: 18px;
+    }
+
+    .options {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 10px;
+        margin-top: 10px;
+      }
+    
+      .options label {
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Center the label content */
+        cursor: pointer;
+        background-color: #f5f5f5;
+        border: 1px solid #ddd;
+        padding: 8px 15px;
+        border-radius: 5px;
+        width: calc(50% - 5px); /* Set the width to occupy half of the container minus the gap */
+        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+      }
+
+    .options input[type="radio"] {
+      margin-right: 5px;
+    }
+
+    .text-container {
+        margin-bottom: 30px;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+    .text-container p {
+        display: inline;
+      }
+    
+      .text-container .input-container {
+        position: relative;
+        display: inline-block;
+        vertical-align: bottom;
+        margin: 0 2px;
+      }
+
+      .text-container .input-container input {
+        border: none;
+        border-bottom: 2px solid #ccc;
+        font-size: 16px;
+        padding: 2px 20px 2px 4px;
+        background: transparent;
+        outline: none;
+        text-align: center;
+      }
+
+    .error-icon,
+    .success-icon {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 20px;
+      display: none;
+    }
+
+    .error-icon {
+      color: #dc3545;
+    }
+
+    .success-icon {
+      color: #28a745;
+    }
+
+    .text-container input.correct {
+        border-bottom: 2px solid #28a745;
+      }
+  
+      .text-container input.incorrect {
+        border-bottom: 2px solid #dc3545;
+      }
+  
+      /* Specific widths for inputs */
+      .text-container input#word1 { width: 120px; }
+      .text-container input#word2 { width: 350px; }
+      .text-container input#word3 { width: 280px; }
+      .text-container input#word4 { width: 280px; }
+      .text-container input#word5 { width: 280px; }
+      .text-container input#word6 { width: 350px; }
+
+    /* Buttons styling */
+    .buttons-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin: 20px auto;
+      padding: 0 20px;
+      max-width: 500px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        font-size: 16px; /* Slightly larger font size */
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        width: 140px;
+        white-space: nowrap;
+        font-weight: 600; /* Bolder font weight */
+      }
+
+      #submit-btn {
+        background: #28a745;
+        color: #ffffff;
+      }
+
+      #submit-btn:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+      }
+
+      #show-answers-btn {
+        background: #28a745;
+        color: #ffffff;
+        opacity: 0;
+        width: 0;
+        padding: 0;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        overflow: hidden;
+      }
+  
+      #show-answers-btn.visible {
+        opacity: 1;
+        width: 200px;
+        padding: 10px 20px;
+        pointer-events: auto;
+      }
+
+    #results {
+      text-align: center;
+      margin: 20px 0;
+      min-height: 27px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #28a745;
+    }
+
+    @media (max-width: 768px) {
+        body { padding: 10px; }
+        .btn {
+          width: 120px;
+          font-size: 13px;
+          padding: 8px 15px;
+        }
+        .options {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        #show-answers-btn.visible { width: 120px; }
+      }
+  
+      @media (max-width: 480px) {
+        .buttons-container {
+          gap: 10px;
+          padding: 0 5px;
+        }
+        .btn {
+          width: 100px;
+          font-size: 12px;
+          padding: 8px 12px;
+        }
+        .question p {
+          font-size: 16px; /* Smaller font size for questions on small screens */
+        }
+      
+        .options label {
+          padding: 8px 12px; /* Adjust padding for options on small screens */
+        }
+
+        #show-answers-btn.visible { width: 100px; }
+      }
+  </style>
+</head>
+<body>
+  <h1>English Grammar Test</h1>
+
+  <div class="quiz-container">
+    <div class="question-title">Part 1: Multiple Choice</div>
+    <div class="question" id="question1">
+        <p>Piece of cake</p>
+        <span class="error-icon">✘</span>
+        <span class="success-icon">✓</span>
+        <div class="options">
+          <label><input type="radio" name="q1" value="a"> a) A difficult task</label>
+          <label><input type="radio" name="q1" value="b"> b) An easy or simple task</label>
+          <label><input type="radio" name="q1" value="c"> c) A complex process</label>
+          <label><input type="radio" name="q1" value="d"> d) Something that requires a lot of effort</label>
+        </div>
+      </div>
+  
+      <div class="question" id="question2">
+        <p>Look forward to</p>
+        <span class="error-icon">✘</span>
+        <span class="success-icon">✓</span>
+        <div class="options">
+          <label><input type="radio" name="q2" value="a"> a) To dread an upcoming event</label>
+          <label><input type="radio" name="q2" value="b"> b) To eagerly anticipate something</label>
+          <label><input type="radio" name="q2" value="c"> c) To forget about the future</label>
+          <label><input type="radio" name="q2" value="d"> d) To avoid planning ahead</label>
+        </div>
+      </div>
+  
+      <div class="question" id="question3">
+          <p>Hit the books</p>
+          <span class="error-icon">✘</span>
+          <span class="success-icon">✓</span>
+          <div class="options">
+            <label><input type="radio" name="q3" value="a"> a) To study hard or intensely</label>
+            <label><input type="radio" name="q3" value="b"> b) To destroy something out of frustration</label>
+            <label><input type="radio" name="q3" value="c"> c) To ignore academic responsibilities</label>
+            <label><input type="radio" name="q3" value="d"> d) To skip studying altogether</label>
+          </div>
+        </div>
+  
+        <div class="question" id="question4">
+          <p>Give someone a hand</p>
+          <span class="error-icon">✘</span>
+          <span class="success-icon">✓</span>
+          <div class="options">
+            <label><input type="radio" name="q4" value="a"> a) To criticize someone</label>
+            <label><input type="radio" name="q4" value="b"> b) To help someone with a task</label>
+            <label><input type="radio" name="q4" value="c"> c) To compete with someone</label>
+            <label><input type="radio" name="q4" value="d"> d) To withdraw support</label>
+          </div>
+        </div>
+  
+        <div class="question" id="question5">
+          <p>Call it a day</p>
+          <span class="error-icon">✘</span>
+          <span class="success-icon">✓</span>
+          <div class="options">
+            <label><input type="radio" name="q5" value="a"> a) To end work or an activity for the day</label>
+            <label><input type="radio" name="q5" value="b"> b) To start a new task</label>
+            <label><input type="radio" name="q5" value="c"> c) To delay an important decision</label>
+            <label><input type="radio" name="q5" value="d"> d) To work late into the night</label>
+          </div>
+        </div>
+  
+        <div class="question" id="question6">
+          <p>On the same page</p>
+          <span class="error-icon">✘</span>
+          <span class="success-icon">✓</span>
+          <div class="options">
+            <label><input type="radio" name="q6" value="a"> a) To be in agreement or understanding with others</label>
+            <label><input type="radio" name="q6" value="b"> b) To have different opinions</label>
+            <label><input type="radio" name="q6" value="c"> c) To argue about a plan or idea</label>
+            <label><input type="radio" name="q6" value="d"> d) To work in isolation</label>
+          </div>
+        </div>
+
+        <div class="question-title">Part 2: Fill in the Blanks</div>
+        <div class="text-container">
+            <p>
+              This assignment was a 
+              <div class="input-container">
+                <input type="text" id="word1" data-correct="piece of cake">
+                <span class="error-icon">✘</span>
+                <span class="success-icon">✓</span>
+              </div>
+              ; I finished it in less than an hour.
+            </p>
+            <br>
+            <p>
+              I really 
+              <div class="input-container">
+                <input type="text" id="word2" data-correct="look forward to visiting my grandparents">
+                <span class="error-icon">✘</span>
+                <span class="success-icon">✓</span>
+              </div>
+              this weekend—it’s been so long since I last saw them.
+            </p>
+            <br>
+            <p>
+                With exams coming up, it’s time to
+                <div class="input-container">
+                    <input type="text" id="word3" data-correct="hit the books">
+                    <span class="error-icon">✘</span>
+                    <span class="success-icon">✓</span>
+                </div>
+                and prepare thoroughly.
+            </p>
+            <br>
+            <p>
+                Could you
+                <div class="input-container">
+                    <input type="text" id="word4" data-correct="give me a hand">
+                    <span class="error-icon">✘</span>
+                    <span class="success-icon">✓</span>
+                </div>
+                and help me carry these boxes upstairs?
+            </p>
+            <br>
+            <p>
+                It’s getting late, so let’s
+                <div class="input-container">
+                    <input type="text" id="word5" data-correct="call it a day">
+                    <span class="error-icon">✘</span>
+                    <span class="success-icon">✓</span>
+                </div>
+                and continue tomorrow.
+            </p>
+            <br>
+            <p>
+                Before we finalize the proposal, let’s make sure we’re all
+                <div class="input-container">
+                    <input type="text" id="word6" data-correct="on the same page">
+                    <span class="error-icon">✘</span>
+                    <span class="success-icon">✓</span>
+                </div>
+                about the budget details.
+            </p>
+          </div>
+  </div>
+
+  <div class="buttons-container">
+    <button id="submit-btn" class="btn">Submit</button>
+    <button id="show-answers-btn" class="btn">Show Answers</button>
+  </div>
+
+  <div id="results"></div>
+
+  <script>
+    const submitBtn = document.getElementById('submit-btn');
+    const showAnswersBtn = document.getElementById('show-answers-btn');
+    const resultsDiv = document.getElementById('results');
+    const questions = document.querySelectorAll('.question');
+    const textContainer = document.querySelector('.text-container');
+    let isShowingAnswers = false;
+
+    const correctAnswers = {
+        q1: 'b',
+        q2: 'b',
+        q3: 'a',
+        q4: 'b',
+        q5: 'a',
+        q6: 'a'
+      };
+
+      const textInputFields = textContainer.querySelectorAll('.input-container input');
+
+      textInputFields.forEach(input => {
+        const container = input.parentElement;
+  
+        const errorIcon = document.createElement('span');
+        errorIcon.classList.add('error-icon');
+        errorIcon.textContent = '✘';
+        container.appendChild(errorIcon);
+  
+        const successIcon = document.createElement('span');
+        successIcon.classList.add('success-icon');
+        successIcon.textContent = '✓';
+        container.appendChild(successIcon);
+  
+        input.setAttribute('data-initial-value', input.value);
+      });
+
+      function checkAnswers() {
+        let correctRadioCount = 0;
+        const totalRadioQuestions = questions.length;
+        let correctTextCount = 0;
+        const totalTextQuestions = textInputFields.length;
+
+  
+        questions.forEach((question, index) => {
+          const questionName = `q${index + 1}`;
+          const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+          const userAnswer = selectedOption ? selectedOption.value : null;
+          const errorIcon = question.querySelector('.error-icon');
+          const successIcon = question.querySelector('.success-icon');
+      
+          if (userAnswer === correctAnswers[questionName]) {
+            correctRadioCount++;
+            errorIcon.style.display = 'none';
+            successIcon.style.display = 'block';
+          } else {
+            errorIcon.style.display = 'block';
+            successIcon.style.display = 'none';
+          }
+        });
+
+        textInputFields.forEach(input => {
+            const userAnswer = input.value.trim();
+            const correctAnswer = input.getAttribute('data-correct');
+            input.setAttribute('data-user-input', userAnswer);
+    
+            const container = input.parentElement;
+            const errorIcon = container.querySelector('.error-icon');
+            const successIcon = container.querySelector('.success-icon');
+    
+            if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+              correctTextCount++;
+              input.classList.add('correct');
+              input.classList.remove('incorrect');
+              errorIcon.style.display = 'none';
+              successIcon.style.display = 'block';
+            } else {
+              input.classList.add('incorrect');
+              input.classList.remove('correct');
+              errorIcon.style.display = 'block';
+              successIcon.style.display = 'none';
+            }
+          });
+  
+        const totalCorrect = correctRadioCount + correctTextCount;
+        const totalQuestions = totalRadioQuestions + totalTextQuestions;
+        const percentage = Math.round((totalCorrect / totalQuestions) * 100);
+        resultsDiv.textContent = `You got ${totalCorrect} out of ${totalQuestions} correct! (${percentage}%)`;
+        showAnswersBtn.classList.add('visible');
+      }
+
+        function toggleCorrectAnswers() {
+            isShowingAnswers = !isShowingAnswers;
+            showAnswersBtn.textContent = isShowingAnswers ? 'Hide Answers' : 'Show Answers';
+          
+            questions.forEach((question, index) => {
+              const questionName = `q${index + 1}`;
+              const options = question.querySelectorAll('.options input[type="radio"]');
+          
+              if (isShowingAnswers) {
+                // Show correct answers
+                options.forEach(option => {
+                  option.checked = option.value === correctAnswers[questionName];
+                });
+              } else {
+                // Reset to user's answers or clear if not answered
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                if (selectedOption) {
+                  selectedOption.checked = true;
+                } else {
+                  options.forEach(option => {
+                    option.checked = false;
+                  });
+                }
+              }
+            });
+
+            textInputFields.forEach(input => {
+                if (isShowingAnswers) {
+                  // Don't add 'correct' class when showing answers
+                  input.value = input.getAttribute('data-correct');
+                  // Keep the existing classes to maintain visual feedback
+                } else {
+                  // Restore user's input and classes
+                  input.value = input.getAttribute('data-user-input');
+                  if (input.value.toLowerCase() !== input.getAttribute('data-correct').toLowerCase()) {
+                    input.classList.add('incorrect');
+                    input.classList.remove('correct');
+                  }
+                }
+              });
+          }
+  
+      submitBtn.addEventListener('click', checkAnswers);
+      showAnswersBtn.addEventListener('click', toggleCorrectAnswers);
+  </script>
+</body>
+</html>
