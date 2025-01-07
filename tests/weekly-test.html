@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>English Idioms Quiz</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Poppins:wght@400;700&display=swap');
 
     * {
       box-sizing: border-box;
@@ -25,12 +25,13 @@
     }
 
     h1 {
-      font-size: 36px;
-      text-align: center;
-      margin-bottom: 30px;
-      color: #2c3e50; /* Darker text color */
-      font-weight: 700; /* Bolder font weight */
-    }
+        font-family: 'Marcellus', serif;
+        font-size: 20px;
+        text-align: center;
+        margin-bottom: 30px;
+        color: #2c3e50;
+        font-weight: 700;
+      }
 
     .quiz-container {
       margin-bottom: 40px;
@@ -73,37 +74,41 @@
       .options label {
         display: flex;
         align-items: center;
-        justify-content: center; /* Center the label content */
+        justify-content: center;
         cursor: pointer;
         background-color: #f5f5f5;
         border: 1px solid #ddd;
         padding: 8px 15px;
         border-radius: 5px;
-        width: calc(50% - 5px); /* Set the width to occupy half of the container minus the gap */
-        box-sizing: border-box; /* Include padding and border in the element's total width and height */
+        width: calc(50% - 5px);
+        box-sizing: border-box;
       }
 
-    .options input[type="radio"] {
-      margin-right: 5px;
-    }
+      .options input[type="radio"] {
+        margin-right: 5px;
+      }
 
     .text-container {
         margin-bottom: 30px;
         font-size: 16px;
         line-height: 1.6;
-      }
-
-    .text-container p {
-        display: inline;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
       }
     
+      .text-container p {
+        display: inline;
+        text-align: center;
+      }
+
       .text-container .input-container {
         position: relative;
         display: inline-block;
         vertical-align: bottom;
         margin: 0 2px;
       }
-
+    
       .text-container .input-container input {
         border: none;
         border-bottom: 2px solid #ccc;
@@ -113,15 +118,24 @@
         outline: none;
         text-align: center;
       }
+    
+      .text-container .input-container .error-icon,
+      .text-container .input-container .success-icon {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        font-size: 14px;
+      }
 
-    .error-icon,
-    .success-icon {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      font-size: 20px;
-      display: none;
-    }
+      .error-icon,
+      .success-icon {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 20px;
+        display: none;
+      }
 
     .error-icon {
       color: #dc3545;
@@ -149,38 +163,44 @@
 
     /* Buttons styling */
     .buttons-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      margin: 20px auto;
-      padding: 0 20px;
-      max-width: 500px;
-    }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin: 20px auto;
+        padding: 0 20px;
+        max-width: 500px;
+      }
 
-    .btn {
-        padding: 10px 20px;
-        font-size: 16px; /* Slightly larger font size */
+      .btn {
+        padding: 8px 16px;
+        font-size: 14px;
         cursor: pointer;
         border: none;
         border-radius: 5px;
-        transition: all 0.3s ease;
-        width: 140px;
+        transition: all 0.2s ease;
+        width: 120px;
         white-space: nowrap;
-        font-weight: 600; /* Bolder font weight */
+        font-weight: 600;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    
+      .btn:active {
+        transform: scale(0.95);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
       }
 
       #submit-btn {
-        background: #28a745;
+        background-color: #007bff; /* Blue submit button */
         color: #ffffff;
       }
-
+    
       #submit-btn:hover {
         background-color: #0056b3; /* Darker blue on hover */
       }
 
       #show-answers-btn {
-        background: #28a745;
+        background-color: #6c757d; /* Gray show answers button */
         color: #ffffff;
         opacity: 0;
         width: 0;
@@ -189,11 +209,15 @@
         transition: all 0.3s ease;
         overflow: hidden;
       }
+    
+      #show-answers-btn:hover {
+        background-color: #545b62; /* Darker gray on hover */
+      }
   
       #show-answers-btn.visible {
         opacity: 1;
-        width: 200px;
-        padding: 10px 20px;
+        width: 180px;
+        padding: 8px 16px;
         pointer-events: auto;
       }
 
@@ -207,38 +231,69 @@
     }
 
     @media (max-width: 768px) {
-        body { padding: 10px; }
+        body {
+          padding: 10px;
+        }
+      
         .btn {
-          width: 120px;
+          width: 110px;
           font-size: 13px;
-          padding: 8px 15px;
+          padding: 8px 12px;
         }
+      
+        #show-answers-btn.visible {
+          width: 110px;
+        }
+      
         .options {
-          flex-direction: column;
-          align-items: flex-start;
+          flex-wrap: wrap; /* Allow options to wrap */
         }
-        #show-answers-btn.visible { width: 120px; }
+      
+        .options label {
+          width: calc(50% - 10px); /* Two options per row with gap */
+        }
+
+        .text-container .input-container .error-icon,
+        .text-container .input-container .success-icon {
+          font-size: 12px;
+        }
+
+        .error-icon,
+        .success-icon {
+          font-size: 18px;
+        }
       }
-  
+
       @media (max-width: 480px) {
         .buttons-container {
-          gap: 10px;
-          padding: 0 5px;
+          gap: 8px;
         }
         .btn {
           width: 100px;
           font-size: 12px;
-          padding: 8px 12px;
+          padding: 6px 10px;
         }
         .question p {
           font-size: 16px; /* Smaller font size for questions on small screens */
         }
       
         .options label {
-          padding: 8px 12px; /* Adjust padding for options on small screens */
+          width: 100%;
         }
 
-        #show-answers-btn.visible { width: 100px; }
+        #show-answers-btn.visible { 
+            width: 150px;
+        }
+
+        .text-container .input-container .error-icon,
+        .text-container .input-container .success-icon {
+          font-size: 12px;
+        }
+
+        .error-icon,
+        .success-icon {
+          font-size: 16px;
+        }
       }
   </style>
 </head>
