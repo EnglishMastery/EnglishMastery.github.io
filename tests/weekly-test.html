@@ -481,6 +481,11 @@
       });
 
       function checkAnswers() {
+        submitBtn.disabled = true;
+        submitBtn.style.cursor = 'not-allowed';
+        submitBtn.style.opacity = '0.6';
+
+
         let correctRadioCount = 0;
         const totalRadioQuestions = questions.length;
         let correctTextCount = 0;
