@@ -565,143 +565,115 @@
     /* -----------------------------------------------------------------
        2) Check Part 1 & Part 2 on client side
        ----------------------------------------------------------------- */
-    function checkPart1AndPart2() {
-      let correctRadioCount = 0;
-      const totalRadioQuestions = questions.length;
-      let correctTextCount = 0;
-      const totalTextQuestions = textInputFields.length;
+       function checkPart1AndPart2() {
+        let correctRadioCount = 0;
+        const totalRadioQuestions = questions.length;
+        let correctTextCount = 0;
+        const totalTextQuestions = textInputFields.length;
 
-      // Check multiple choice
-      questions.forEach((question, index) => {
-        const questionName = `q${index + 1}`;
-        const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
-        const userAnswer = selectedOption ? selectedOption.value : null;
-        const errorIcon = question.querySelector('.error-icon');
-        const successIcon = question.querySelector('.success-icon');
+        // Check multiple choice
+        questions.forEach((question, index) => {
+            const questionName = `q${index + 1}`;
+            const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+            const userAnswer = selectedOption ? selectedOption.value : null;
+            const errorIcon = question.querySelector('.error-icon');
+            const successIcon = question.querySelector('.success-icon');
 
-        if (userAnswer === correctAnswers[questionName]) {
-          correctRadioCount++;
-          if (successIcon) successIcon.style.display = 'inline';
-          if (errorIcon) errorIcon.style.display = 'none';
-        } else {
-          if (errorIcon) errorIcon.style.display = 'inline';
-          if (successIcon) successIcon.style.display = 'none';
-        }
-      });
+            if (userAnswer === correctAnswers[questionName]) {
+                correctRadioCount++;
+                if (successIcon) successIcon.style.display = 'inline';
+                if (errorIcon) errorIcon.style.display = 'none';
+            } else {
+                if (errorIcon) errorIcon.style.display = 'inline';
+                if (successIcon) successIcon.style.display = 'none';
+            }
+        });
 
-      // Check fill-in-the-blanks
-      textInputFields.forEach(input => {
-        const userAnswer = input.value.trim();
-        const correctAnswer = input.getAttribute('data-correct');
-        const container = input.parentElement;
-        const errorIcon = container.querySelector('.error-icon');
-        const successIcon = container.querySelector('.success-icon');
+        // Check fill-in-the-blanks
+        textInputFields.forEach(input => {
+            const userAnswer = input.value.trim().toLowerCase();
+            const correctAnswer = input.getAttribute('data-correct').toLowerCase();
+            const container = input.parentElement;
+            const errorIcon = container.querySelector('.error-icon');
+            const successIcon = container.querySelector('.success-icon');
 
-        if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
-          correctTextCount++;
-          input.classList.add('correct');
-          input.classList.remove('incorrect');
-          errorIcon.style.display = 'none';
-          successIcon.style.display = 'inline';
-        } else {
-          input.classList.add('incorrect');
-          input.classList.remove('correct');
-          errorIcon.style.display = 'inline';
-          successIcon.style.display = 'none';
-        }
-      });
+            if (userAnswer === correctAnswer) {
+                correctTextCount++;
+                input.classList.add('correct');
+                input.classList.remove('incorrect');
+                errorIcon.style.display = 'none';
+                successIcon.style.display = 'inline';
+            } else {
+                input.classList.add('incorrect');
+                input.classList.remove('correct');
+                errorIcon.style.display = 'inline';
+                successIcon.style.display = 'none';
+            }
+        });
 
-      const totalCorrect = correctRadioCount + correctTextCount;
-      const totalQuestions = totalRadioQuestions + totalTextQuestions;
-      const percentage = Math.round((totalCorrect / totalQuestions) * 100);
-
-      return { totalCorrect, totalQuestions, percentage };
+        return { correctRadioCount, correctTextCount, totalRadioQuestions, totalTextQuestions };
     }
 
     /* -----------------------------------------------------------------
        3) Check Part 4 sentences with GPT-4o-mini 
           (client-side call to OpenAI; not recommended for production)
        ----------------------------------------------------------------- */
-    async function checkPart4WithGPT4OMini(allSentences) {
-      // Show loading
-      loadingOverlay.style.display = 'flex';
+       async function checkPart4WithGPT4OMini(allSentences) {
+        loadingOverlay.style.display = 'flex';
 
-      // Replace with your actual API key
-      const apiKey = 'sk-proj-2uCY3DuKxu0wkursgWlBT3BlbkFJavGwigefRWIREGwwrxzs';
-      const apiUrl = 'https://api.openai.com/v1/chat/completions';
+        const apiKey = 'sk-proj-2uCY3DuKxu0wkursgWlBT3BlbkFJavGwigefRWIREGwwrxzs'; // Replace with your actual API key
+        const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
-      // We'll send ONE prompt including all user sentences,
-      // instructing GPT-4o-mini to return a JSON array with correct/feedback.
-      // This is a simple approach. You can refine it as needed.
+        const systemMessage = `You are an English teacher checking idiom usage and grammar. Check these sentences and respond with a JSON array where each element is an object with "correct" (boolean) and "feedback" (string). Example: [{"correct":true,"feedback":""},{"correct":false,"feedback":"Incorrect usage of the idiom"}]`;
 
-      const systemMessage = {
-        role: "system",
-        content: `You are an English grammar checker that focuses on idioms usage (piece of cake, look forward to, hit the books, give someone a hand, call it a day, on the same page).
-Return a JSON array of length 6, where each array element has:
-{
-  "correct": true or false,
-  "feedback": "Short explanation if false"
-}
-Check if the idiom is used properly (allow morphological forms), and check for any grammar mistakes. If everything is fine, correct: true. If something is wrong, correct: false and a short feedback explanation.`
-      };
+        const userMessage = allSentences.join('\n');
 
-      // Build user content with all 6 sentences
-      let userContent = "Here are the 6 user sentences:\n";
-      allSentences.forEach((s, idx) => {
-        userContent += `Sentence ${idx+1}: ${s}\n`;
-      });
-      userContent += `\nReturn only the JSON array. No extra text.`;
-
-      const userMessage = {
-        role: "user",
-        content: userContent
-      };
-
-      try {
-        const response = await fetch(apiUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
-          },
-          body: JSON.stringify({
-            model: "gpt-4o", 
-            messages: [systemMessage, userMessage],
-            temperature: 0,
-            max_tokens: 3000
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error('OpenAI API error');
-        }
-
-        const data = await response.json();
-        // data structure from Chat API:
-        // data.choices[0].message.content => should contain the JSON array we asked for
-        const content = data.choices[0].message.content;
-        // We'll try to parse it as JSON
-        let parsed;
         try {
-          parsed = JSON.parse(content);
-        } catch (err) {
-          console.error("Could not parse GPT response as JSON:", content);
-          // fallback
-          parsed = allSentences.map(() => ({ correct: false, feedback: "Could not parse GPT output." }));
-        }
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    model: "gpt-4",  // or your specific model
+                    messages: [
+                        { role: "system", content: systemMessage },
+                        { role: "user", content: userMessage }
+                    ],
+                    temperature: 0.3
+                })
+            });
 
-        return parsed;
-      } catch (error) {
-        console.error("Error calling ChatGPT 4o mini:", error);
-        // fallback
-        return allSentences.map(() => ({
-          correct: false,
-          feedback: "Could not check your sentence due to an error."
-        }));
-      } finally {
-        // Hide loading
-        loadingOverlay.style.display = 'none';
-      }
+            if (!response.ok) {
+                throw new Error('API request failed');
+            }
+
+            const data = await response.json();
+            let results;
+            
+            try {
+                // Try to parse the response content as JSON
+                results = JSON.parse(data.choices[0].message.content);
+            } catch (e) {
+                // If parsing fails, create a structured response
+                results = allSentences.map(sentence => ({
+                    correct: sentence.length > 0,  // Consider non-empty sentences as correct
+                    feedback: sentence.length > 0 ? "" : "Please enter a sentence"
+                }));
+            }
+
+            return results;
+
+        } catch (error) {
+            console.error("Error:", error);
+            return allSentences.map(sentence => ({
+                correct: sentence.length > 0,
+                feedback: sentence.length > 0 ? "" : "Please enter a sentence"
+            }));
+        } finally {
+            loadingOverlay.style.display = 'none';
+        }
     }
 
     /* -----------------------------------------------------------------
@@ -741,61 +713,64 @@ Check if the idiom is used properly (allow morphological forms), and check for a
     /* -----------------------------------------------------------------
        5) Submit Handler
        ----------------------------------------------------------------- */
+    
+
     async function handleSubmission() {
-      // Disable Submit to prevent double-click
-      submitBtn.disabled = true;
-      submitBtn.style.cursor = 'not-allowed';
-      submitBtn.style.opacity = '0.6';
+        submitBtn.disabled = true;
+        submitBtn.style.cursor = 'not-allowed';
+        submitBtn.style.opacity = '0.6';
 
-      // 1) Check Part 1 + Part 2
-      const p1p2Result = checkPart1AndPart2();
+        // Check Part 1 + Part 2
+        const p1p2Result = checkPart1AndPart2();
 
-      // 2) Gather sentences from Part 4
-      const sentences = sentenceFields.map(sf => sf.textarea.value.trim());
+        // Get sentences from Part 4
+        const sentences = sentenceFields.map(sf => sf.textarea.value.trim());
+        const nonEmptySentences = sentences.filter(s => s.length > 0);
+        
+        // Check Part 4
+        const checkResults = await checkPart4WithGPT4OMini(sentences);
+        
+        // Calculate Part 4 score
+        const correctSentences = checkResults.filter(r => r.correct).length;
+        
+        // Update UI for Part 4
+        let anyIncorrect = false;
+        checkResults.forEach((r, idx) => {
+            const { textarea, hint } = sentenceFields[idx];
+            if (r.correct) {
+                textarea.classList.remove('incorrect-border');
+                hint.style.display = 'none';
+            } else {
+                textarea.classList.add('incorrect-border');
+                hint.style.display = 'block';
+                hint.innerText = r.feedback;
+                anyIncorrect = true;
+            }
+        });
 
-      // 3) Call GPT-4o mini check
-      const checkResults = await checkPart4WithGPT4OMini(sentences);
+        // Calculate total score
+        const totalCorrect = p1p2Result.correctRadioCount + p1p2Result.correctTextCount + correctSentences;
+        const totalQuestions = p1p2Result.totalRadioQuestions + p1p2Result.totalTextQuestions + sentences.length;
+        const percentage = Math.round((totalCorrect / totalQuestions) * 100);
 
-      // 4) For each sentence, show errors if incorrect
-      let anyIncorrect = false;
-      checkResults.forEach((r, idx) => {
-        const { textarea, hint } = sentenceFields[idx];
-        if (r.correct) {
-          // Mark as correct, hide error-hint
-          textarea.classList.remove('incorrect-border');
-          hint.style.display = 'none';
-          hint.innerText = '';
-        } else {
-          // Mark as incorrect, show error-hint
-          textarea.classList.add('incorrect-border');
-          hint.style.display = 'block';
-          hint.innerText = r.feedback;
-          anyIncorrect = true;
-        }
-      });
+        // Show results
+        let resultMessage = `Total Score: ${totalCorrect} out of ${totalQuestions} (${percentage}%)\n`;
+        resultMessage += `Multiple Choice: ${p1p2Result.correctRadioCount}/${p1p2Result.totalRadioQuestions}\n`;
+        resultMessage += `Fill in the Blanks: ${p1p2Result.correctTextCount}/${p1p2Result.totalTextQuestions}\n`;
+        resultMessage += `Sentence Creation: ${correctSentences}/${sentences.length}`;
+        
+        resultsDiv.innerHTML = resultMessage.replace(/\n/g, '<br>');
 
-      // 5) Show the final results
-      // e.g. "You got # out of # correct! (X%)"
-      let resultMessage = `You got ${p1p2Result.totalCorrect} out of ${p1p2Result.totalQuestions} correct! (${p1p2Result.percentage}%)`;
-      if (anyIncorrect) {
-        resultMessage += "\nMake sure to get back to your sentences to see your errors!";
-      } else {
-        resultMessage += "\nNo grammar errors found in your sentences!";
-      }
-      resultsDiv.textContent = resultMessage;
+        // Show answers button
+        showAnswersBtn.classList.add('visible');
 
-      // 6) Show "Show Answers" button for Part 1 & 2
-      showAnswersBtn.classList.add('visible');
-
-      // 7) Store results in Google Form
-      const userName = document.getElementById('userName').value || "Unknown";
-      const scoreSummary = `${p1p2Result.totalCorrect} / ${p1p2Result.totalQuestions} (${p1p2Result.percentage}%)`;
-      const sentenceFeedback = checkResults;
-      storeInGoogleForm({
-        userName,
-        scoreSummary,
-        sentenceFeedback
-      });
+        // Store results
+        const userName = document.getElementById('userName').value || "Unknown";
+        storeInGoogleForm({
+            userName,
+            scoreSummary: `${totalCorrect}/${totalQuestions} (${percentage}%)`,
+            sentenceFeedback: checkResults
+        });
     }
 
     /* -----------------------------------------------------------------
