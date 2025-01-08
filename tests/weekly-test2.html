@@ -621,12 +621,18 @@
        async function checkPart4WithGPT4OMini(allSentences) {
         loadingOverlay.style.display = 'flex';
 
-        const apiKey = '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'; // Replace with your actual API key
+        const apiKey = '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'; // Replace with actual key
         const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
-        const systemMessage = `You are an English teacher checking idiom usage and grammar. Check these sentences and respond with a JSON array where each element is an object with "correct" (boolean) and "feedback" (string). Example: [{"correct":true,"feedback":""},{"correct":false,"feedback":"Incorrect usage of the idiom"}]`;
+        const systemMessage = {
+            role: "system",
+            content: `You are an English teacher specialized in idiom usage. For each sentence, check if the idiom is used correctly and if there are any grammar mistakes. Respond with a JSON array of objects, each having "correct" (boolean) and "feedback" (string) properties. Example response: [{"correct":true,"feedback":""},{"correct":false,"feedback":"Incorrect usage of the idiom 'piece of cake'"}]`
+        };
 
-        const userMessage = allSentences.join('\n');
+        const userMessage = {
+            role: "user",
+            content: `Check these sentences for correct idiom usage and grammar:\n${allSentences.join('\n')}\n\nRespond only with the JSON array.`
+        };
 
         try {
             const response = await fetch(apiUrl, {
@@ -636,45 +642,57 @@
                     'Authorization': `Bearer ${apiKey}`
                 },
                 body: JSON.stringify({
-                    model: "gpt-4o-mini",  // or your specific model
-                    messages: [
-                        { role: "system", content: systemMessage },
-                        { role: "user", content: userMessage }
-                    ],
-                    temperature: 0.3
+                    model: "gpt-4o-mini",  // Using GPT-4o-mini model
+                    messages: [systemMessage, userMessage],
+                    temperature: 0.3,
+                    max_tokens: 1000
                 })
             });
 
             if (!response.ok) {
-                throw new Error('API request failed');
+                throw new Error(`API request failed: ${response.status}`);
             }
 
             const data = await response.json();
-            let results;
             
+            // Extract the content from the response
+            const content = data.choices[0].message.content;
+            
+            // Try to parse the JSON response
             try {
-                // Try to parse the response content as JSON
-                results = JSON.parse(data.choices[0].message.content);
-            } catch (e) {
-                // If parsing fails, create a structured response
-                results = allSentences.map(sentence => ({
-                    correct: sentence.length > 0,  // Consider non-empty sentences as correct
-                    feedback: sentence.length > 0 ? "" : "Please enter a sentence"
+                const parsedResults = JSON.parse(content);
+                
+                // Validate the structure
+                if (Array.isArray(parsedResults) && parsedResults.length === allSentences.length) {
+                    return parsedResults;
+                } else {
+                    throw new Error('Invalid response structure');
+                }
+            } catch (parseError) {
+                console.error("Parse error:", parseError);
+                // Fallback: Create structured response based on sentence presence
+                return allSentences.map(sentence => ({
+                    correct: sentence.length >= 10, // Basic validation: at least 10 characters
+                    feedback: sentence.length >= 10 ? 
+                        "" : 
+                        "Please write a complete sentence using the idiom correctly."
                 }));
             }
 
-            return results;
-
         } catch (error) {
-            console.error("Error:", error);
+            console.error("API Error:", error);
+            // Fallback response
             return allSentences.map(sentence => ({
-                correct: sentence.length > 0,
-                feedback: sentence.length > 0 ? "" : "Please enter a sentence"
+                correct: sentence.length >= 10,
+                feedback: sentence.length >= 10 ? 
+                    "Could not verify sentence - using basic validation." : 
+                    "Please write a complete sentence using the idiom correctly."
             }));
         } finally {
             loadingOverlay.style.display = 'none';
         }
     }
+
 
     /* -----------------------------------------------------------------
        4) Store data in Google Forms (placeholder)
