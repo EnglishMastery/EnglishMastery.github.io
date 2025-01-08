@@ -621,7 +621,7 @@
        async function checkPart4WithGPT4OMini(allSentences) {
         loadingOverlay.style.display = 'flex';
 
-        const apiKey = 'sk-proj-2uCY3DuKxu0wkursgWlBT3BlbkFJavGwigefRWIREGwwrxzs'; // Replace with your actual API key
+        const apiKey = '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'; // Replace with your actual API key
         const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
         const systemMessage = `You are an English teacher checking idiom usage and grammar. Check these sentences and respond with a JSON array where each element is an object with "correct" (boolean) and "feedback" (string). Example: [{"correct":true,"feedback":""},{"correct":false,"feedback":"Incorrect usage of the idiom"}]`;
