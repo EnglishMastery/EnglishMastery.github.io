@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>English Idioms Quiz</title>
-  <style>
+<p> </p>
+<p></p>
+<p><script src="https://apis.google.com/js/api.js"></script><style>
     @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Poppins:wght@400;700&display=swap');
 
     * {
@@ -12,7 +8,6 @@
       margin: 0;
       padding: 0;
     }
-
     body {
       font-family: 'Poppins', sans-serif;
       padding: 20px;
@@ -23,571 +18,1449 @@
       display: flex;
       flex-direction: column;
     }
-
     h1 {
-        font-family: 'Marcellus', serif;
-        font-size: 20px;
-        text-align: center;
-        margin-bottom: 30px;
-        color: #2c3e50;
-        font-weight: 700;
-      }
-
+      font-family: 'Marcellus', serif;
+      font-size: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2c3e50;
+      font-weight: 700;
+    }
+    .user-info {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .overlay-content input {
+      font-family: 'Poppins', sans-serif;
+      margin-top: 5px; 
+      padding: 8px 12px; 
+      width: 250px;
+      border: 2px solid #ccc;
+      border-radius: 20px; /* More rounded */
+      outline: none;
+      font-size: 14px;
+    }
     .quiz-container {
-      margin-bottom: 40px;
+      margin-bottom: 20px;
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
     }
-
+    .question-title {
+      font-weight: bold;
+      color: #2c3e50;
+      font-size: 18px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
     .question {
-      padding: 20px;
-      margin-bottom: 20px;
+      padding: 15px;
+      margin-bottom: 15px;
       background-color: #fff;
       border-radius: 8px;
       text-align: center;
       position: relative;
+      border: 1px solid transparent;
     }
-
-    .question-title {
-        font-weight: bold;
-        color: #2c3e50;
-        font-size: 22px;
-        margin-bottom: 15px;
-      }
-
     .question p {
       font-weight: bold;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       color: #2c3e50;
-      font-size: 18px;
+      font-size: 16px;
     }
-
     .options {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        gap: 10px;
-        margin-top: 10px;
-      }
-    
-      .options label {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        background-color: #f5f5f5;
-        border: 1px solid #ddd;
-        padding: 8px 15px;
-        border-radius: 5px;
-        width: calc(50% - 5px);
-        box-sizing: border-box;
-      }
-
-      .options input[type="radio"] {
-        margin-right: 5px;
-      }
-
-    .text-container {
-        margin-bottom: 30px;
-        font-size: 16px;
-        line-height: 1.6;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-      }
-    
-      .text-container p {
-        display: inline;
-        text-align: center;
-      }
-
-      .text-container .input-container {
-        position: relative;
-        display: inline-block;
-        vertical-align: bottom;
-        margin: 0 2px;
-      }
-    
-      .text-container .input-container input {
-        border: none;
-        border-bottom: 2px solid #ccc;
-        font-size: 16px;
-        padding: 2px 20px 2px 4px;
-        background: transparent;
-        outline: none;
-        text-align: center;
-      }
-    
-      .text-container .input-container .error-icon,
-      .text-container .input-container .success-icon {
-        position: absolute;
-        top: 50%;
-        right: 0;
-        transform: translateY(-50%);
-        font-size: 14px;
-      }
-
-      .error-icon,
-      .success-icon {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 20px;
-        display: none;
-      }
-
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 10px;
+      margin-top: 5px;
+    }
+    .options label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background-color: #f5f5f5;
+      border: 1px solid #ddd;
+      padding: 8px 15px;
+      border-radius: 5px;
+      width: calc(50% - 5px);
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    .options input[type="radio"] {
+      margin-right: 5px;
+    }
     .error-icon {
+      display: none; 
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
       color: #dc3545;
     }
-
     .success-icon {
+      display: none;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
       color: #28a745;
     }
+    .text-container {
+      margin-bottom: 20px;
+      font-size: 16px;
+      line-height: 1.6;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+    }
+    .text-container p {
+      display: inline;
+      text-align: center;
+    }
+    .text-container .input-container {
+      position: relative;
+      display: inline-block;
+      vertical-align: bottom;
+      margin: 0 2px;
+    }
+    .text-container .input-container input {
+      border: none;
+      border-bottom: 2px solid #ccc;
+      font-size: 16px;
+      padding: 2px 15px 2px 4px;
+      background: transparent;
+      outline: none;
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+    }
+    .text-container .input-container .error-icon,
+    .text-container .input-container .success-icon {
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+    }
+    .correct {
+      border-bottom: 2px solid #28a745 !important;
+    }
+    .incorrect {
+      border-bottom: 2px solid #dc3545 !important;
+    }
+    /* Specific widths for fill-ins */
+    .text-container input#word1 { width: 220px; }
+    .text-container input#word2 { width: 220px; }
+    .text-container input#word3 { width: 220px; }
+    .text-container input#word4 { width: 220px; }
+    .text-container input#word5 { width: 220px; }
+    .text-container input#word6 { width: 220px; }
+    .text-container input#word7 { width: 220px; }
+    .text-container input#word8 { width: 220px; }
+    .text-container input#word9 { width: 220px; }
+    .text-container input#word10 { width: 220px; }
 
-    .text-container input.correct {
-        border-bottom: 2px solid #28a745;
-      }
-  
-      .text-container input.incorrect {
-        border-bottom: 2px solid #dc3545;
-      }
-  
-      /* Specific widths for inputs */
-      .text-container input#word1 { width: 120px; }
-      .text-container input#word2 { width: 120px; }
-      .text-container input#word3 { width: 120px; }
-      .text-container input#word4 { width: 120px; }
-      .text-container input#word5 { width: 120px; }
-      .text-container input#word6 { width: 120px; }
-
-    /* Buttons styling */
+    /* Buttons */
     .buttons-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        margin: 20px auto;
-        padding: 0 20px;
-        max-width: 500px;
-      }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin: 10px auto;
+      padding: 0 20px;
+      max-width: 500px;
+    }
+    .btn {
+      padding: 8px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      transition: all 0.2s ease;
+      width: 120px;
+      white-space: nowrap;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      font-family: 'Poppins', sans-serif;
+    }
+    .btn:active {
+      transform: scale(0.95);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    }
+    #submit-btn {
+      background: #28a745; 
+      color: #ffffff;
+    }
+    #submit-btn:hover {
+      background-color: #1e7e34; 
+    }
+    #show-answers-btn {
+      background: #007bff;
+      color: #ffffff;
+      opacity: 0;
+      width: 0;
+      padding: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+    #show-answers-btn:hover {
+      background-color: #0056b3; 
+    }
+    #show-answers-btn.visible {
+      opacity: 1;
+      width: 180px;
+      padding: 8px 14px;
+      pointer-events: auto;
+    }
 
-      .btn {
-        padding: 8px 16px;
-        font-size: 14px;
-        cursor: pointer;
-        border: none;
-        border-radius: 5px;
-        transition: all 0.2s ease;
-        width: 120px;
-        white-space: nowrap;
-        font-weight: 600;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-    
-      .btn:active {
-        transform: scale(0.95);
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
-      }
-
-      #submit-btn {
-        background: #28a745; 
-        color: #ffffff;
-      }
-    
-      #submit-btn:hover {
-        background-color: #1e7e34; /* Darker blue on hover */
-      }
-
-      #show-answers-btn {
-        background: #007bff;
-        color: #ffffff;
-        opacity: 0;
-        width: 0;
-        padding: 0;
-        pointer-events: none;
-        transition: all 0.3s ease;
-        overflow: hidden;
-      }
-    
-      #show-answers-btn:hover {
-        background-color: #0056b3; 
-      }
-  
-      #show-answers-btn.visible {
-        opacity: 1;
-        width: 180px;
-        padding: 8px 16px;
-        pointer-events: auto;
-      }
-
+    /* Results text */
     #results {
       text-align: center;
-      margin: 20px 0;
+      margin: 20px 0 20px 0;
       min-height: 27px;
       font-size: 16px;
       font-weight: bold;
       color: #28a745;
+      font-family: 'Poppins', sans-serif;
     }
 
+    /* Loading overlay */
+    #loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    #loading-overlay p {
+      font-size: 18px;
+      font-weight: 600;
+      color: #555;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Responsive adjustments */
     @media (max-width: 768px) {
-        body {
-          padding: 10px;
-        }
-      
-        .btn {
-          width: 110px;
-          font-size: 13px;
-          padding: 8px 12px;
-        }
-      
-        #show-answers-btn.visible {
-          width: 110px;
-        }
-      
-        .options {
-          flex-wrap: wrap; /* Allow options to wrap */
-        }
-      
-        .options label {
-          width: calc(50% - 10px); /* Two options per row with gap */
-        }
-
-        .text-container .input-container .error-icon,
-        .text-container .input-container .success-icon {
-          font-size: 12px;
-        }
-
-        .error-icon,
-        .success-icon {
-          font-size: 18px;
-        }
+      body {
+        padding: 10px;
+      }
+      .question-title {
+        font-size: 16px;
+      }
+      .question p {
+        font-size: 14px;
+      }
+      .btn {
+        width: 110px;
+        font-size: 13px;
+      }
+      #show-answers-btn.visible {
+        width: 120px;
+      }
+      .options label {
+        font-size: 13px;
       }
 
-      @media (max-width: 480px) {
-        .buttons-container {
-          gap: 8px;
-        }
-        .btn {
-          width: 100px;
-          font-size: 12px;
-          padding: 6px 10px;
-        }
-        .question p {
+      .timer {
+        top: 10px;
+        right: 10px;
+        font-size: 14px;
+        padding: 8px 12px;
+      }
+      
+      .overlay-content {
+        width: 90%;
+        padding: 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .buttons-container {
+        gap: 8px;
+      }
+      .btn {
+        width: 100px;
+        font-size: 12px;
+      }
+
+      .question p {
           font-size: 16px; /* Smaller font size for questions on small screens */
         }
-      
-        .options label {
-          width: 100%;
-        }
 
-        #show-answers-btn.visible { 
-            width: 150px;
-        }
-
-        .text-container .input-container .error-icon,
-        .text-container .input-container .success-icon {
-          font-size: 12px;
-        }
-
-        .error-icon,
-        .success-icon {
-          font-size: 16px;
-        }
+      #show-answers-btn.visible { 
+        width: 130px;
       }
-  </style>
-</head>
-<body>
-  <h1>English Grammar Test</h1>
+      .sentence-creation-container label {
+        font-size: 14px;
+      }
+      .sentence-creation-container textarea {
+        font-size: 14px;
+      }
+      .options label {
+    width: 100%; /* Each label takes full width */
+    margin-bottom: 10px; /* Add some space between stacked options */
+    font-size: 15px;
+  }
+  
+    }
+    
 
-  <div class="quiz-container">
-    <div class="question-title">Part 1: Multiple Choice</div>
-    <div class="question" id="question1">
-        <p>Piece of cake</p>
-        <span class="error-icon">✘</span>
-        <span class="success-icon">✓</span>
-        <div class="options">
-          <label><input type="radio" name="q1" value="a"> a) A difficult task</label>
-          <label><input type="radio" name="q1" value="b"> b) An easy or simple task</label>
-          <label><input type="radio" name="q1" value="c"> c) A complex process</label>
-          <label><input type="radio" name="q1" value="d"> d) Something that requires a lot of effort</label>
-        </div>
-      </div>
-  
-      <div class="question" id="question2">
-        <p>Look forward to</p>
-        <span class="error-icon">✘</span>
-        <span class="success-icon">✓</span>
-        <div class="options">
-          <label><input type="radio" name="q2" value="a"> a) To dread an upcoming event</label>
-          <label><input type="radio" name="q2" value="b"> b) To eagerly anticipate something</label>
-          <label><input type="radio" name="q2" value="c"> c) To forget about the future</label>
-          <label><input type="radio" name="q2" value="d"> d) To avoid planning ahead</label>
-        </div>
-      </div>
-  
-      <div class="question" id="question3">
-          <p>Hit the books</p>
-          <span class="error-icon">✘</span>
-          <span class="success-icon">✓</span>
-          <div class="options">
-            <label><input type="radio" name="q3" value="a"> a) To study hard or intensely</label>
-            <label><input type="radio" name="q3" value="b"> b) To destroy something out of frustration</label>
-            <label><input type="radio" name="q3" value="c"> c) To ignore academic responsibilities</label>
-            <label><input type="radio" name="q3" value="d"> d) To skip studying altogether</label>
-          </div>
-        </div>
-  
-        <div class="question" id="question4">
-          <p>Give someone a hand</p>
-          <span class="error-icon">✘</span>
-          <span class="success-icon">✓</span>
-          <div class="options">
-            <label><input type="radio" name="q4" value="a"> a) To criticize someone</label>
-            <label><input type="radio" name="q4" value="b"> b) To help someone with a task</label>
-            <label><input type="radio" name="q4" value="c"> c) To compete with someone</label>
-            <label><input type="radio" name="q4" value="d"> d) To withdraw support</label>
-          </div>
-        </div>
-  
-        <div class="question" id="question5">
-          <p>Call it a day</p>
-          <span class="error-icon">✘</span>
-          <span class="success-icon">✓</span>
-          <div class="options">
-            <label><input type="radio" name="q5" value="a"> a) To end work or an activity for the day</label>
-            <label><input type="radio" name="q5" value="b"> b) To start a new task</label>
-            <label><input type="radio" name="q5" value="c"> c) To delay an important decision</label>
-            <label><input type="radio" name="q5" value="d"> d) To work late into the night</label>
-          </div>
-        </div>
-  
-        <div class="question" id="question6">
-          <p>On the same page</p>
-          <span class="error-icon">✘</span>
-          <span class="success-icon">✓</span>
-          <div class="options">
-            <label><input type="radio" name="q6" value="a"> a) To be in agreement or understanding with others</label>
-            <label><input type="radio" name="q6" value="b"> b) To have different opinions</label>
-            <label><input type="radio" name="q6" value="c"> c) To argue about a plan or idea</label>
-            <label><input type="radio" name="q6" value="d"> d) To work in isolation</label>
-          </div>
-        </div>
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
 
-        <div class="question-title">Part 2: Fill in the Blanks</div>
-        <div class="text-container">
-            <p>
-              1. This assignment was a 
-              <div class="input-container">
-                <input type="text" id="word1" data-correct="piece of cake">
-                <span class="error-icon">✘</span>
-                <span class="success-icon">✓</span>
-              </div>
-              . I finished it in less than an hour. 
-            </p>
-            <br>
-            <br>
-            <p>
-              2. I really 
-              <div class="input-container">
-                <input type="text" id="word2" data-correct="look forward to visiting my grandparents">
-                <span class="error-icon">✘</span>
-                <span class="success-icon">✓</span>
-              </div>
-              this weekend—it’s been so long since I last saw them.
-            </p>
-            <br>
-            <br>
-            <p>
-               3. With exams coming up, it’s time to
-                <div class="input-container">
-                    <input type="text" id="word3" data-correct="hit the books">
-                    <span class="error-icon">✘</span>
-                    <span class="success-icon">✓</span>
+    .overlay-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 90%;
+      width: 400px;
+    }
+
+    #start-quiz {
+      background: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      margin-top: 10px;
+    }
+
+    #start-quiz:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* Disabled quiz state */
+    .quiz-disabled {
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .timer {
+      position: fixed;
+      top: 33px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 10px 15px;
+      border-radius: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 900;
+      font-family: 'Poppins', sans-serif;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    /* Add completion message styles */
+    #completion-message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1001;
+      text-align: center;
+      display: none;
+    }
+
+    .modal {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 15px; /* Reduced padding */
+  border-radius: 10px;
+  width: 95%; /* Set to 95% of the viewport width */
+  max-width: 750px; /* Maximum width */
+  max-height: 75vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px; /* Reduced margin */
+  padding-bottom: 5px; /* Reduced padding */
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+  color: #2c3e50;
+  margin: 0;
+  font-size: 20px; /* Reduced font size */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #555;
+}
+
+#leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+#leaderboard-table th,
+#leaderboard-table td {
+  padding: 8px; /* Reduced padding */
+  text-align: center; /* Center align all cells */
+  border-bottom: 1px solid #eee;
+  font-size: 14px; /* Reduced font size */
+}
+
+#leaderboard-table th {
+  background-color: #f8f9fa;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+/* Fixed width for Username column and ellipsis for overflow */
+#leaderboard-table th:nth-child(2),
+#leaderboard-table td:nth-child(2) {
+  width: 140px;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.more-details {
+  background: #6c5ce7;
+  color: white;
+  border: none;
+  padding: 4px 8px; /* Reduced padding */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px; /* Reduced font size */
+}
+
+.more-details:hover {
+  background: #5b4bc4;
+}
+
+.expanded-row {
+  background-color: #f8f9fa;
+  padding: 10px; /* Reduced padding */
+  margin: 5px 0; /* Reduced margin */
+  border-radius: 4px;
+}
+
+.expanded-row p {
+  margin: 2px 0; /* Reduced margin */
+  color: #2c3e50;
+  font-size: 13px; /* Reduced font size */
+}
+
+/* Limit width of Feedback column and allow word wrapping */
+#leaderboard-table .expanded-row td:nth-child(1) {
+  max-width: 250px; /* Adjust as needed */
+  word-wrap: break-word;
+}
+
+/* Top 3 ranks styling */
+.rank-1 {
+  background-color: rgba(255, 215, 0, 0.7); /* Bright gold with 70% opacity */
+}
+
+.rank-2 {
+  background-color: rgba(192, 192, 192, 0.7); /* Bright silver with 70% opacity */
+}
+
+.rank-3 {
+  background-color: rgba(205, 127, 50, 0.7); /* Bright bronze with 70% opacity */
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .modal-content {
+      width: 95%;
+      margin: 2% auto;
+  }
+
+  #leaderboard-table th,
+  #leaderboard-table td {
+      padding: 6px; /* Further reduced padding */
+      font-size: 12px; /* Further reduced font size */
+  }
+
+  .modal-header h2 {
+      font-size: 18px; /* Further reduced font size */
+  }
+}
+
+.restart-overlay {
+position: fixed;
+bottom: 20px;
+right: 20px;
+z-index: 900; /* Ensure it's above other elements */
+}
+
+#restart-btn {
+background: #007bff; /* Blue background */
+color: #ffffff;
+border: none;
+padding: 10px 15px;
+border-radius: 20px;
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+font-family: 'Poppins', sans-serif;
+font-weight: bold;
+font-size: 16px;
+cursor: pointer;
+}
+
+#leaderboard-btn {
+    font-size: 24px;
+    font-family: 'Poppins', sans-serif;
+    padding: 10px 20px;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    margin: 0 auto; /* Center the button horizontally */
+    position: relative; /* Use relative positioning to ensure proper layout */
+    bottom: 75px; /* Adjust vertical positioning */
+    right: 0; /* Reset conflicting position */
+    background-color: #ffffff; /* Ensure proper button background */
+    color: #000000; /* Button text color */
+    border: 1px solid #ccc; /* Optional border styling */
+    border-radius: 5px; /* Optional rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    cursor: pointer; /* Indicate interactivity */
+    transition: margin-top 0.3s ease;
+  }
+
+  #leaderboard-btn.slide-down {
+    margin-top: 50px; /* Normal position */
+}
+
+.tab-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.tab-button {
+  padding: 4px 8px;
+  border: none;
+	margin 10px auto;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #e2e8f0;
+  color: #4a5568;
+  transition: all 0.3s ease;
+}
+
+.tab-button.active {
+  background-color: #6c5ce7;
+  color: white;
+}
+
+.tab-button:hover:not(.active) {
+  background-color: #cbd5e0;
+}
+  </style></p>
+<div id="username-overlay" class="overlay">
+<div class="overlay-content">
+<h2>Welcome to the Quiz</h2>
+<p>Please enter your full name or username (@):</p>
+<input id="userName" style="width: 80%; padding: 8px; margin: 10px 0;" name="userName" type="text" placeholder="e.g. @LeapEng" /> <button id="start-quiz" disabled="disabled">Start Quiz</button></div>
+</div>
+<!-- Timer -->
+<div id="timer" class="timer" style="display: none;">Time: <span id="time">00:00</span></div>
+<div id="restart-overlay" class="restart-overlay" style="display: none;"><button id="restart-btn" class="btn">Restart</button></div>
+<!-- Loading overlay -->
+<div id="loading-overlay">
+<p>Checking your sentences...</p>
+</div>
+<h1>English Grammar Test</h1>
+<!-- Part 1 + Part 2 -->
+<div class="quiz-container">
+<div class="question-title">Part 1: Multiple Choice</div>
+<p style="text-align: center; margin: 0 0 20px 0;">Choose the correct description of given idiom.</p>
+<div id="question3" class="question">
+<p>Hit the books</p>
+<span class="error-icon">✘</span> <span class="success-icon">✓</span>
+<div class="options"><label><input name="q3" type="radio" value="a" /> a) To study hard or intensely</label> <label><input name="q3" type="radio" value="b" /> b) To destroy something out of frustration</label> <label><input name="q3" type="radio" value="c" /> c) To ignore academic responsibilities</label> <label><input name="q3" type="radio" value="d" /> d) To skip studying altogether</label></div>
+</div>
+<div id="question6" class="question">
+<p>On the same page</p>
+<span class="error-icon">✘</span> <span class="success-icon">✓</span>
+<div class="options"><label><input name="q6" type="radio" value="a" /> a) To be in agreement or understanding with others</label> <label><input name="q6" type="radio" value="b" /> b) To have different opinions</label> <label><input name="q6" type="radio" value="c" /> c) To argue about a plan or idea</label> <label><input name="q6" type="radio" value="d" /> d) To work in isolation</label></div>
+</div>
+<div id="question1" class="question">
+<p>Piece of cake</p>
+<span class="error-icon">✘</span> <span class="success-icon">✓</span>
+<div class="options"><label><input name="q1" type="radio" value="a" /> a) A difficult task</label> <label><input name="q1" type="radio" value="b" /> b) An easy or simple task</label> <label><input name="q1" type="radio" value="c" /> c) A complex process</label> <label><input name="q1" type="radio" value="d" /> d) Something that requires a lot of effort</label></div>
+</div>
+<div id="question5" class="question">
+<p>Call it a day</p>
+<span class="error-icon">✘</span> <span class="success-icon">✓</span>
+<div class="options"><label><input name="q5" type="radio" value="a" /> a) To end work or an activity for the day</label> <label><input name="q5" type="radio" value="b" /> b) To start a new task</label> <label><input name="q5" type="radio" value="c" /> c) To delay an important decision</label> <label><input name="q5" type="radio" value="d" /> d) To work late into the night</label></div>
+</div>
+<div id="question4" class="question">
+<p>Give someone a hand</p>
+<span class="error-icon">✘</span> <span class="success-icon">✓</span>
+<div class="options"><label><input name="q4" type="radio" value="a" /> a) To criticize someone</label> <label><input name="q4" type="radio" value="b" /> b) To help someone with a task</label> <label><input name="q4" type="radio" value="c" /> c) To compete with someone</label> <label><input name="q4" type="radio" value="d" /> d) To withdraw support</label></div>
+</div>
+<div id="question2" class="question">
+<p>Look forward to</p>
+<span class="error-icon">✘</span> <span class="success-icon">✓</span>
+<div class="options"><label><input name="q2" type="radio" value="a" /> a) To dread an upcoming event</label> <label><input name="q2" type="radio" value="b" /> b) To eagerly anticipate something</label> <label><input name="q2" type="radio" value="c" /> c) To forget about the future</label> <label><input name="q2" type="radio" value="d" /> d) To avoid planning ahead</label></div>
+</div>
+</div>
+<div class="quiz-container">
+<div class="question-title">Part 2: Fill in the Blanks</div>
+<p style="text-align: center; margin: 0 0 20px 0;">Use the phrases you've learned throughout the week to complete these sentences.</p>
+<div class="text-container">
+<p>1. I really</p>
+<div class="input-container"><input id="word2" type="text" data-correct="look forward to " /> <span class="error-icon">✘</span> <span class="success-icon">✓</span></div>
+<p>visiting my grandparents this weekend—it’s been so long since I last saw them.</p>
+<br /><br />
+<p>2. It’s getting late, so let’s</p>
+<div class="input-container"><input id="word5" type="text" data-correct="call it a day" /> <span class="error-icon">✘</span> <span class="success-icon">✓</span></div>
+<p>and continue tomorrow.</p>
+<br /><br />
+<p>3. Before we finalize the proposal, let’s make sure we’re all</p>
+<div class="input-container"><input id="word6" type="text" data-correct="on the same page" /> <span class="error-icon">✘</span> <span class="success-icon">✓</span></div>
+<p>about the budget details.</p>
+<br /><br />
+<p>4. With exams coming up, it’s time to</p>
+<div class="input-container"><input id="word3" type="text" data-correct="hit the books" /> <span class="error-icon">✘</span> <span class="success-icon">✓</span></div>
+<p>and prepare thoroughly.</p>
+<br /><br />
+<p>5. This assignment was a</p>
+<div class="input-container"><input id="word1" type="text" data-correct="piece of cake" /> <span class="error-icon">✘</span> <span class="success-icon">✓</span></div>
+<p>. I finished it in less than an hour.</p>
+<br /><br />
+<p>6. Could you</p>
+<div class="input-container"><input id="word4" type="text" data-correct="give me a hand" /> <span class="error-icon">✘</span> <span class="success-icon">✓</span></div>
+<p>and help me carry these boxes upstairs?</p>
+<br /><br />
+<p>7. I'm thrilled to finally</p>
+<div class="input-container"><input id="word7" type="text" data-correct="hit the books" /> <span class="error-icon">✘</span> <span class="success-icon">✓</span></div>
+<p>for my language course; I've been wanting to improve my skills for months.</p>
+<br /><br />
+<p>8. Since we're all</p>
+<div class="input-container"><input id="word8" type="text" data-correct="on the same page" /> <span class="error-icon">✘</span> <span class="success-icon">✓</span></div>
+<p>regarding the project goals, we can move forward with confidence.</p>
+<br /><br />
+<p>9. She found the coding challenge to be a</p>
+<div class="input-container"><input id="word9" type="text" data-correct="piece of cake" /> <span class="error-icon">✘</span> <span class="success-icon">✓</span></div>
+<p>, finishing it well before the deadline.</p>
+<br /><br />
+<p>10. Can you</p>
+<div class="input-container"><input id="word10" type="text" data-correct="give me a hand" /> <span class="error-icon">✘</span> <span class="success-icon">✓</span></div>
+<p>with setting up the venue for the event? I could really use some help.</p>
+</div>
+</div>
+<!-- Submission + Show Answers Buttons -->
+<div class="buttons-container"><button id="submit-btn" class="btn">Submit</button> <button id="show-answers-btn" class="btn">Show Answers</button></div>
+<!-- Results placeholder -->
+<div id="results"> </div>
+<div id="completion-message"> </div>
+<p><script>
+const leaderboardBody = document.getElementById('leaderboard-body'); 
+function showLoadingIndicator() {
+    const leaderboardBody = document.getElementById('leaderboard-body'); // Get element here
+    if (leaderboardBody) { // Check if element exists
+        leaderboardBody.innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
+    } else {
+        console.error("Could not find leaderboard-body element");
+    }
+}
+
+
+
+// Add these at the top with your other constants
+// Add these at the top with your other constants
+const MASTER_SPREADSHEET_ID = '1nxo2cJ4qCLkvUWd3ojbSzDUHTVYbC0HxoyAM6lVFHM0';
+const currentTestTab = document.getElementById('current-test-tab');
+const allTestsTab = document.getElementById('all-tests-tab');
+let currentLeaderboardType = 'current';
+
+// Add this new function to fetch and process master leaderboard data
+async function fetchMasterLeaderboard() {
+    const leaderboardBody = document.getElementById('leaderboard-body');
+    leaderboardBody.innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
+
+    try {
+        await new Promise((resolve, reject) => {
+            gapi.load('client', {
+                callback: resolve,
+                onerror: reject,
+            });
+        });
+
+        await gapi.client.init({
+            apiKey: API_KEY,
+            discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+        });
+
+        const response = await gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId: MASTER_SPREADSHEET_ID,
+            range: 'Overall Rankings!A2:D',
+        });
+
+        const values = response.result.values;
+        if (!values || values.length === 0) {
+            leaderboardBody.innerHTML = '<tr><td colspan="4">No data available</td></tr>';
+            return;
+        }
+
+        // Process the data
+        const processedData = processMasterLeaderboardData(values);
+        displayMasterLeaderboard(processedData);
+
+    } catch (error) {
+        console.error('Error fetching master leaderboard:', error);
+        leaderboardBody.innerHTML = `<tr><td colspan="4">Error loading leaderboard: ${error.message}</td></tr>`;
+    }
+}
+
+function processMasterLeaderboardData(data) {
+    // Group by username
+    const userResults = {};
+    
+    data.forEach(([username, duration, percentage, testId]) => {
+        if (!userResults[username]) {
+            userResults[username] = {
+                tests: {},
+                totalTests: 0
+            };
+        }
+        
+        if (!userResults[username].tests[testId]) {
+            userResults[username].tests[testId] = [];
+            userResults[username].totalTests++;
+        }
+        
+        userResults[username].tests[testId].push({
+          duration: duration,
+            percentage: parseFloat(percentage.replace('%', ''))
+        });
+    });
+
+    // Calculate averages
+    const processedResults = Object.entries(userResults).map(([username, data]) => {
+        let totalBestPercentage = 0;
+        let totalBestTime = 0;
+        
+        Object.values(data.tests).forEach(attempts => {
+            // Get best percentage for this test
+            const bestAttempt = attempts.reduce((best, current) => 
+                current.percentage > best.percentage ? current : best
+            );
+            totalBestPercentage += bestAttempt.percentage;
+            
+            // Convert duration to seconds
+            const [mins, secs] = bestAttempt.duration.split(':').map(Number);
+            totalBestTime += mins * 60 + secs;
+        });
+
+        return {
+            username,
+            averagePercentage: (totalBestPercentage / data.totalTests).toFixed(1),
+            averageTime: formatTime(Math.round(totalBestTime / data.totalTests)),
+            testsCount: data.totalTests
+        };
+    });
+
+    // Sort by percentage then time
+    return processedResults.sort((a, b) => {
+        if (parseFloat(b.averagePercentage) !== parseFloat(a.averagePercentage)) {
+            return parseFloat(b.averagePercentage) - parseFloat(a.averagePercentage);
+        }
+        return convertTimeToSeconds(a.averageTime) - convertTimeToSeconds(b.averageTime);
+    });
+}
+
+function displayMasterLeaderboard(data) {
+    const leaderboardBody = document.getElementById('leaderboard-body');
+    leaderboardBody.innerHTML = data.map((entry, index) => `
+        <tr class="rank-${index < 3 ? index + 1 : ''}">
+            <td>${index + 1}</td>
+            <td>${entry.username}</td>
+            <td>${entry.averagePercentage}%</td>
+            <td>
+                <button class="more-details" onclick="toggleMasterDetails(${index})">More</button>
+            </td>
+        </tr>
+        <tr id="master-details-${index}" style="display: none;">
+            <td colspan="4">
+                <div class="expanded-row">
+                    <p><strong>Average Time:</strong> ${entry.averageTime}</p>
+                    <p><strong>Tests Completed:</strong> ${entry.testsCount}</p>
                 </div>
-                and prepare thoroughly.
-            </p>
-            <br>
-            <br>
-            <p>
-                4. Could you
-                <div class="input-container">
-                    <input type="text" id="word4" data-correct="give me a hand">
-                    <span class="error-icon">✘</span>
-                    <span class="success-icon">✓</span>
-                </div>
-                and help me carry these boxes upstairs?
-            </p>
-            <br>
-            <br>
-            <p>
-                5. It’s getting late, so let’s
-                <div class="input-container">
-                    <input type="text" id="word5" data-correct="call it a day">
-                    <span class="error-icon">✘</span>
-                    <span class="success-icon">✓</span>
-                </div>
-                and continue tomorrow.
-            </p>
-            <br>
-            <br>
-            <p>
-                6. Before we finalize the proposal, let’s make sure we’re all
-                <div class="input-container">
-                    <input type="text" id="word6" data-correct="on the same page">
-                    <span class="error-icon">✘</span>
-                    <span class="success-icon">✓</span>
-                </div>
-                about the budget details.
-            </p>
-          </div>
-  </div>
+            </td>
+        </tr>
+    `).join('');
+}
+	
+function toggleMasterDetails(index) {
+    const detailsRow = document.getElementById(`master-details-${index}`);
+    detailsRow.style.display = detailsRow.style.display === 'none' ? 'table-row' : 'none';
+}
 
-  <div class="buttons-container">
-    <button id="submit-btn" class="btn">Submit</button>
-    <button id="show-answers-btn" class="btn">Show Answers</button>
-  </div>
+// Helper function to format time
+function formatTime(totalSeconds) {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
 
-  <div id="results"></div>
+// Replace with your actual API key and spreadsheet ID
+const API_KEY = 'AIzaSyA2pVX_Fec0ROyp-jCJq3cggQuXba9Lh7U';
+  const SPREADSHEET_ID = '1-IuXbrKc_T_pqK8zCzOMyh_64PtQMWN-DMb7WkwlbJQ';
 
-  <script>
+let quizStarted = false;
+  let timerInterval;
+  let startTime;
+  let userName = '';
+  let quizSubmitted = false;
+
+  // Disable all quiz elements initially
+  document.querySelectorAll('.quiz-container').forEach(container => {
+    container.classList.add('quiz-disabled');
+  });
+
+  // Username and start button logic
+  const userNameInput = document.getElementById('userName');
+  const startQuizBtn = document.getElementById('start-quiz');
+  const usernameOverlay = document.getElementById('username-overlay');
+  const timerDisplay = document.getElementById('timer');
+  const submitBtn = document.getElementById('submit-btn');
+  const showAnswersBtn = document.getElementById('show-answers-btn');
+  const resultsDiv = document.getElementById('results');
+  const questions = document.querySelectorAll('.question');
+  const textContainer = document.querySelector('.text-container');
+  const loadingOverlay = document.getElementById('loading-overlay');
+  const completionMessage = document.getElementById('completion-message');
+
+  userNameInput.addEventListener('input', () => {
+    startQuizBtn.disabled = !userNameInput.value.trim();
+  });
+
+  startQuizBtn.addEventListener('click', () => {
+    userName = userNameInput.value.trim();
+    if (userName) {
+      usernameOverlay.style.display = 'none';
+      document.querySelectorAll('.quiz-container').forEach(container => {
+        container.classList.remove('quiz-disabled');
+      });
+      startTimer();
+      quizStarted = true;
+    }
+  });
+
+  // Timer functions
+  function startTimer() {
+    startTime = Date.now();
+    timerDisplay.style.display = 'block';
+    timerInterval = setInterval(updateTimer, 1000);
+  }
+
+  function updateTimer() {
+    const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+    const minutes = Math.floor(elapsedTime / 60);
+    const seconds = elapsedTime % 60;
+    document.getElementById('time').textContent = 
+      `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  function getFormattedTime(ms) {
+    const totalSeconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+
+
+  /* -----------------------------------------------------------------
+     1) Basic Setup & DOM references
+     ----------------------------------------------------------------- */
+     document.querySelectorAll('.quiz-container').forEach(container => {
+    container.classList.add('quiz-disabled');
+  });
+  // Multiple choice correct answers
+  const correctAnswers = {
+  q1: 'b', // Piece of cake - "An easy or simple task"
+  q2: 'b', // Look forward to - "To eagerly anticipate something"
+  q3: 'a', // Hit the books - "To study hard or intensely"
+  q4: 'b', // Give someone a hand - "To help someone with a task"
+  q5: 'a', // Call it a day - "To end work or an activity for the day"
+  q6: 'a'  // On the same page - "To be in agreement or understanding with others"
+};
+
+const restartOverlay = document.getElementById('restart-overlay');
+restartOverlay.style.display = 'block';
+
+const restartBtn = document.getElementById('restart-btn');
+restartBtn.addEventListener('click', () => {
+// Reset timer
+clearInterval(timerInterval);
+document.getElementById('time').textContent = '00:00';
+
+// Reset quizSubmitted flag
+quizSubmitted = false;
+
+// Re-enable submit button
+submitBtn.disabled = false;
+submitBtn.style.cursor = 'pointer';
+submitBtn.style.opacity = '1';
+
+// Hide completion message
+completionMessage.style.display = 'none';
+
+// Reset inputs
+const allInputs = document.querySelectorAll('input, textarea');
+allInputs.forEach(input => {
+  if (input.type === 'radio') {
+    input.checked = false;
+  } else if (input.type !== 'button') {
+    input.value = '';
+    input.classList.remove('correct', 'incorrect', 'incorrect-border');
+  }
+  input.disabled = false; // Re-enable inputs
+});
+
+// Clear feedback icons and hints
+const feedbackIcons = document.querySelectorAll('.feedback-icon');
+feedbackIcons.forEach(icon => icon.remove());
+
+const errorHints = document.querySelectorAll('.error-hint');
+errorHints.forEach(hint => hint.style.display = 'none');
+
+// Clear results
+resultsDiv.innerHTML = '';
+
+// Reset show answers button
+showAnswersBtn.classList.remove('visible');
+showAnswersBtn.textContent = 'Show Answers';
+isShowingAnswers = false;
+
+// Start the timer again if the quiz has been restarted
+if (quizStarted) {
+  startTimer();
+}
+
+// Scroll to top
+window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+	
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM Element References (that need to be accessed after the DOM is loaded)
+    const leaderboardBtn = document.getElementById('leaderboard-btn');
+    const leaderboardModal = document.getElementById('leaderboard-modal');
+    const closeBtn = document.querySelector('.close');
     const submitBtn = document.getElementById('submit-btn');
     const showAnswersBtn = document.getElementById('show-answers-btn');
-    const resultsDiv = document.getElementById('results');
-    const questions = document.querySelectorAll('.question');
-    const textContainer = document.querySelector('.text-container');
-    let isShowingAnswers = false;
+    const currentTestTab = document.getElementById('current-test-tab');
+    const allTestsTab = document.getElementById('all-tests-tab');
+    const leaderboardBody = document.getElementById('leaderboard-body'); 
+	
+    function showLoadingIndicator() {
+        leaderboardBody.innerHTML = '<tr><td colspan="4">Loading...</td></tr>';
+    }
 
-    const correctAnswers = {
-        q1: 'b',
-        q2: 'b',
-        q3: 'a',
-        q4: 'b',
-        q5: 'a',
-        q6: 'a'
-      };
+    // Event Listeners
 
-      const textInputFields = textContainer.querySelectorAll('.input-container input');
+    // Open leaderboard modal
+    leaderboardBtn.onclick = async function() {
+      leaderboardModal.style.display = "block";
+      await fetchAndDisplayLeaderboard(); // Call fetchAndDisplayLeaderboard *after* DOM is ready
+    };
 
-      textInputFields.forEach(input => {
-        const container = input.parentElement;
-  
-        const errorIcon = document.createElement('span');
-        errorIcon.classList.add('error-icon');
-        errorIcon.textContent = '✘';
-        container.appendChild(errorIcon);
-  
-        const successIcon = document.createElement('span');
-        successIcon.classList.add('success-icon');
-        successIcon.textContent = '✓';
-        container.appendChild(successIcon);
-  
-        input.setAttribute('data-initial-value', input.value);
-      });
 
-      function checkAnswers() {
+
+    // Close modal when clicking X
+    closeBtn.onclick = function() {
+      leaderboardModal.style.display = "none";
+    };
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      if (event.target == leaderboardModal) {
+        leaderboardModal.style.display = "none";
+      }
+    };
+
+    // Handle quiz submission
+    submitBtn.addEventListener('click', handleSubmission);
+
+    // Show/hide correct answers
+    showAnswersBtn.addEventListener('click', toggleCorrectAnswers);
+
+    currentTestTab.addEventListener('click', () => {
+        currentLeaderboardType = 'current';
+        currentTestTab.classList.add('active');
+        allTestsTab.classList.remove('active');
+
+        fetchAndDisplayLeaderboard(); // This will eventually replace the loading message
+    });
+
+    // Switch to "All Tests" leaderboard tab
+    allTestsTab.addEventListener('click', () => {
+        currentLeaderboardType = 'all';
+        allTestsTab.classList.add('active');
+        currentTestTab.classList.remove('active');
+
+        // Show loading indicator before fetching data
+        showLoadingIndicator();
+
+        fetchMasterLeaderboard(); // This will eventually replace the loading message
+    });
+
+});
+
+  // Fill-in-the-blanks references
+  const textInputFields = textContainer.querySelectorAll('.input-container input');
+
+  let isShowingAnswers = false;
+
+  /* -----------------------------------------------------------------
+     2) Check Part 1 & Part 2 on client side
+     ----------------------------------------------------------------- */
+     function checkPart1AndPart2() {
+  let correctRadioCount = 0;
+  const totalRadioQuestions = questions.length;
+  let correctTextCount = 0;
+  const totalTextQuestions = textInputFields.length;
+
+  // Check multiple choice in the new order
+  questions.forEach((question) => {
+      const questionId = question.id;  // This will get "question1", "question2", etc.
+      const questionNumber = questionId.replace('question', '');
+      const selectedOption = document.querySelector(`input[name="q${questionNumber}"]:checked`);
+      const userAnswer = selectedOption ? selectedOption.value : null;
+      const errorIcon = question.querySelector('.error-icon');
+      const successIcon = question.querySelector('.success-icon');
+
+      if (userAnswer === correctAnswers[`q${questionNumber}`]) {
+          correctRadioCount++;
+          if (successIcon) successIcon.style.display = 'inline';
+          if (errorIcon) errorIcon.style.display = 'none';
+      } else {
+          if (errorIcon) errorIcon.style.display = 'inline';
+          if (successIcon) successIcon.style.display = 'none';
+      }
+  });
+
+  // Check fill-in-the-blanks
+  textInputFields.forEach(input => {
+      const userAnswer = input.value.trim().toLowerCase();
+      const correctAnswer = input.getAttribute('data-correct').toLowerCase();
+      const container = input.parentElement;
+      const errorIcon = container.querySelector('.error-icon');
+      const successIcon = container.querySelector('.success-icon');
+
+      if (userAnswer === correctAnswer) {
+          correctTextCount++;
+          input.classList.add('correct');
+          input.classList.remove('incorrect');
+          errorIcon.style.display = 'none';
+          successIcon.style.display = 'inline';
+      } else {
+          input.classList.add('incorrect');
+          input.classList.remove('correct');
+          errorIcon.style.display = 'inline';
+          successIcon.style.display = 'none';
+      }
+  });
+
+  return { correctRadioCount, correctTextCount, totalRadioQuestions, totalTextQuestions };
+}
+
+  // Add validation function
+  function validateQuizCompletion() {
+// Check Multiple Choice (Part 1)
+const multipleChoiceComplete = Array.from({ length: 6 }, (_, i) => 
+  document.querySelector(`input[name="q${i + 1}"]:checked`)
+).every(Boolean);
+
+// Check Fill in the Blanks (Part 2)
+const fillBlanksComplete = Array.from({ length: 10 }, (_, i) =>
+  document.getElementById(`word${i + 1}`).value.trim()
+).every(Boolean);
+
+return multipleChoiceComplete && fillBlanksComplete;
+}
+
+
+
+  /* -----------------------------------------------------------------
+     5) Submit Handler
+     ----------------------------------------------------------------- */
+     async function handleSubmission() {
+        if (!quizStarted || quizSubmitted) {
+        return;
+        }
+
+        if (!validateQuizCompletion()) {
+        alert('Please complete all parts of the quiz before submitting.');
+        return;
+        }
+
+        // Disable the submit button
         submitBtn.disabled = true;
         submitBtn.style.cursor = 'not-allowed';
         submitBtn.style.opacity = '0.6';
 
+        clearInterval(timerInterval);
+        const completionTime = Date.now() - startTime;
+        const formattedTime = getFormattedTime(completionTime);
 
-        let correctRadioCount = 0;
-        const totalRadioQuestions = questions.length;
-        let correctTextCount = 0;
-        const totalTextQuestions = textInputFields.length;
+        const p1p2Result = checkPart1AndPart2();
 
-  
+        const totalCorrect = p1p2Result.correctRadioCount + p1p2Result.correctTextCount;
+        const totalQuestions = p1p2Result.totalRadioQuestions + p1p2Result.totalTextQuestions;
+        const percentage = Math.round((totalCorrect / totalQuestions) * 100);
+
+        // Submit to Google Sheets
+        try {
+        await submitToGoogleSheets({
+            userName: userName,
+            timeTaken: formattedTime,
+            score: `${percentage}%`,
+            feedback: 'No feedback for this test type.',
+        });
+        } catch (error) {
+        console.error('Error submitting to Google Sheets:', error);
+        alert('Error saving results. Please try again.');
+        loadingOverlay.style.display = 'none';
+        return;
+        }
+
+        // Hide loading overlay
+        loadingOverlay.style.display = 'none';
+
+        // Display results
+        resultsDiv.innerHTML = `
+        Completion Time: ${formattedTime}<br>
+        Total Score: ${totalCorrect} out of ${totalQuestions} (${percentage}%)<br>
+        Multiple Choice: ${p1p2Result.correctRadioCount}/${p1p2Result.totalRadioQuestions}<br>
+        Fill in the Blanks: ${p1p2Result.correctTextCount}/${p1p2Result.totalTextQuestions}<br>
+        `;
+        showAnswersBtn.classList.add('visible');
+        quizSubmitted = true;
+
+        // Slide down the Leaderboard button
+        const leaderboardBtn = document.getElementById('leaderboard-btn');
+        leaderboardBtn.classList.add('slide-down');
+
+        completionMessage.innerHTML = `
+        <h2>Quiz Completed!</h2> <br>
+        <p>Time taken: ${formattedTime}</p>
+        <p>Score: ${percentage}%</p>
+        <br>
+        <h3>Make sure to go through the test one more time to see the feedback!</h3>
+        <div class="buttons-container" style="margin-top: 20px;">
+        <button onclick="this.parentElement.parentElement.style.display='none'" 
+            style="padding: 8px 16px; border-radius: 5px; background: #28a745; color: white; border: none; cursor: pointer; margin-right: 10px;">
+            Close
+        </button>
+        <button onclick="showLeaderboard()" 
+            style="padding: 8px 16px; border-radius: 5px; background: #6c5ce7; color: white; border: none; cursor: pointer;">
+            View Leaderboard
+        </button>
+        </div>
+        `;
+        completionMessage.style.display = 'block';
+
+        // Disable inputs
+        document.querySelectorAll('input, textarea').forEach(input => {
+        input.disabled = true;
+        });
+        }
+
+        let userAnswers = {
+        multipleChoice: {},
+        fillBlanks: {},
+        sentences: {}
+        };
+
+        /* -----------------------------------------------------------------
+            6) Show/Hide Correct Answers
+            ----------------------------------------------------------------- */
+            function saveUserAnswers() {
+        // Save multiple choice answers
         questions.forEach((question, index) => {
-          const questionName = `q${index + 1}`;
-          const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
-          const userAnswer = selectedOption ? selectedOption.value : null;
-          const errorIcon = question.querySelector('.error-icon');
-          const successIcon = question.querySelector('.success-icon');
-      
-          if (userAnswer === correctAnswers[questionName]) {
-            correctRadioCount++;
-            errorIcon.style.display = 'none';
-            successIcon.style.display = 'block';
-          } else {
-            errorIcon.style.display = 'block';
-            successIcon.style.display = 'none';
-          }
+        const questionName = `q${index + 1}`;
+        const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+        userAnswers.multipleChoice[questionName] = selectedOption ? selectedOption.value : null;
         });
 
-        textInputFields.forEach(input => {
-            const userAnswer = input.value.trim();
-            const correctAnswer = input.getAttribute('data-correct');
-            input.setAttribute('data-user-input', userAnswer);
-    
-            const container = input.parentElement;
-            const errorIcon = container.querySelector('.error-icon');
-            const successIcon = container.querySelector('.success-icon');
-    
-            if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
-              correctTextCount++;
-              input.classList.add('correct');
-              input.classList.remove('incorrect');
-              errorIcon.style.display = 'none';
-              successIcon.style.display = 'block';
-            } else {
-              input.classList.add('incorrect');
-              input.classList.remove('correct');
-              errorIcon.style.display = 'block';
-              successIcon.style.display = 'none';
-            }
-          });
-  
-        const totalCorrect = correctRadioCount + correctTextCount;
-        const totalQuestions = totalRadioQuestions + totalTextQuestions;
-        const percentage = Math.round((totalCorrect / totalQuestions) * 100);
-        resultsDiv.textContent = `You got ${totalCorrect} out of ${totalQuestions} correct! (${percentage}%)`;
-        showAnswersBtn.classList.add('visible');
-      }
+        // Save fill in the blanks answers
+        textInputFields.forEach((input, index) => {
+        userAnswers.fillBlanks[`word${index + 1}`] = input.value;
+        });
+        }
 
+        // Modified toggleCorrectAnswers function
         function toggleCorrectAnswers() {
-            isShowingAnswers = !isShowingAnswers;
-            showAnswersBtn.textContent = isShowingAnswers ? 'Hide Answers' : 'Show Answers';
-          
-            questions.forEach((question, index) => {
-              const questionName = `q${index + 1}`;
-              const options = question.querySelectorAll('.options input[type="radio"]');
-          
-              if (isShowingAnswers) {
-                // Show correct answers
-                options.forEach(option => {
-                  option.checked = option.value === correctAnswers[questionName];
-                });
-              } else {
-                // Reset to user's answers or clear if not answered
-                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+        isShowingAnswers = !isShowingAnswers;
+        showAnswersBtn.textContent = isShowingAnswers ? 'Hide Answers' : 'Show Answers';
+
+        if (isShowingAnswers) {
+            // Save current answers
+            questions.forEach((question) => {
+                const questionId = question.id;
+                const questionNumber = questionId.replace('question', '');
+                const selectedOption = document.querySelector(`input[name="q${questionNumber}"]:checked`);
                 if (selectedOption) {
-                  selectedOption.checked = true;
-                } else {
-                  options.forEach(option => {
-                    option.checked = false;
-                  });
+                    selectedOption.dataset.userAnswer = 'true';
                 }
-              }
             });
 
             textInputFields.forEach(input => {
-                if (isShowingAnswers) {
-                  // Don't add 'correct' class when showing answers
-                  input.value = input.getAttribute('data-correct');
-                  // Keep the existing classes to maintain visual feedback
-                } else {
-                  // Restore user's input and classes
-                  input.value = input.getAttribute('data-user-input');
-                  if (input.value.toLowerCase() !== input.getAttribute('data-correct').toLowerCase()) {
-                    input.classList.add('incorrect');
-                    input.classList.remove('correct');
-                  }
+                input.dataset.userAnswer = input.value;
+            });
+
+            // Show correct answers
+            questions.forEach((question) => {
+                const questionId = question.id;
+                const questionNumber = questionId.replace('question', '');
+                const radios = question.querySelectorAll('input[type="radio"]');
+                radios.forEach(radio => {
+                    radio.checked = (radio.value === correctAnswers[`q${questionNumber}`]);
+                    radio.disabled = true;
+                });
+            });
+
+            textInputFields.forEach(input => {
+                input.value = input.getAttribute('data-correct');
+                input.disabled = true;
+            });
+        } else {
+            // Restore user answers
+            questions.forEach((question) => {
+                const questionId = question.id;
+                const questionNumber = questionId.replace('question', '');
+                const radios = question.querySelectorAll('input[type="radio"]');
+                radios.forEach(radio => {
+                    radio.checked = radio.dataset.userAnswer === 'true';
+                    radio.disabled = false;
+                    delete radio.dataset.userAnswer;
+                });
+            });
+
+            textInputFields.forEach(input => {
+                input.value = input.dataset.userAnswer || '';
+                input.disabled = false;
+                delete input.dataset.userAnswer;
+            });
+        }
+        }
+
+        async function showLeaderboard() {
+            const leaderboardModal = document.getElementById('leaderboard-modal');
+            leaderboardModal.style.display = "block";
+            await fetchAndDisplayLeaderboard();
+        }
+
+        // Convert time string to seconds (no changes required here)
+        function convertTimeToSeconds(timeStr) {
+            const [minutes, seconds] = timeStr.split(':').map(Number);
+            return minutes * 60 + seconds;
+        }
+
+        //Move function definition and add leaderboardBody definition
+        function displayLeaderboard(data) {
+            const leaderboardBody = document.getElementById('leaderboard-body');
+            leaderboardBody.innerHTML = data.map((entry, index) => `
+                <tr class="rank-${index < 3 ? index + 1 : ''}">
+                <td>${index + 1}</td>
+                <td>${entry.username}</td>
+                <td>${entry.score}</td>
+                <td>
+                    <button class="more-details" onclick="toggleDetails(${index})">More</button>
+                </td>
+                </tr>
+                <tr id="details-${index}" style="display: none;">
+                <td colspan="4">
+                    <div class="expanded-row">
+                    <p><strong>Time:</strong> ${entry.time}</p>
+                    <p><strong>Feedback:</strong></p>
+                    <p>${entry.feedback}</p>
+                    </div>
+                </td>
+                </tr>
+            `).join('');
+        }
+
+        //Move function definition
+        function toggleDetails(index) {
+            const detailsRow = document.getElementById(`details-${index}`);
+            const currentDisplay = detailsRow.style.display;
+            detailsRow.style.display = currentDisplay === 'none' ? 'table-row' : 'none';
+        }
+
+        async function fetchAndDisplayLeaderboard() {
+            const leaderboardBody = document.getElementById('leaderboard-body');
+
+            // Show loading indicator immediately (before any await)
+            showLoadingIndicator(); 
+
+            if (currentLeaderboardType === 'all') {
+                await fetchMasterLeaderboard();
+            } else {
+                try {
+                    // 1. Load the Google API Client Library
+                    await new Promise((resolve, reject) => {
+                        gapi.load('client', {
+                            callback: resolve,
+                            onerror: reject,
+                        });
+                    });
+
+                    // 2. Initialize the Sheets API client
+                    await gapi.client.init({
+                        apiKey: API_KEY,
+                        discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+                    });
+
+                    // 3. Fetch data from the spreadsheet
+                    const response = await gapi.client.sheets.spreadsheets.values.get({
+                        spreadsheetId: SPREADSHEET_ID,
+                        range: 'Results!B2:F', // Adjust range as needed
+                    });
+
+                    const values = response.result.values;
+
+                    if (!values || values.length === 0) {
+                        leaderboardBody.innerHTML = '<tr><td colspan="4">There is no data here yet. Be the first to submit!</td></tr>';
+                        return;
+                    }
+
+                    // 4. Format the data
+                    const leaderboardData = values.map(row => ({
+                        timestamp: row[0],
+                        username: row[1],
+                        time: row[2],
+                        score: row[3],
+                        feedback: row[4],
+                    }));
+
+                    // 5. Sort data
+                    const sortedData = leaderboardData.sort((a, b) => {
+                        const scoreA = parseInt(a.score);
+                        const scoreB = parseInt(b.score);
+                        if (scoreB !== scoreA) {
+                            return scoreB - scoreA;
+                        }
+                        return convertTimeToSeconds(a.time) - convertTimeToSeconds(b.time);
+                    });
+
+                    // 6. Display leaderboard
+                    displayLeaderboard(sortedData);
+
+                } catch (error) {
+                    console.error('Error fetching leaderboard:', error);
+                    leaderboardBody.innerHTML = `<tr><td colspan="4">Error loading leaderboard: ${error.message}</td></tr>`;
                 }
-              });
-          }
+            }
+        }
+
+async function submitToGoogleSheets(data) {
+    try {
+      const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxnWhxqaO0OsWSEPhEuTVbt4ED_4WRK4GRRlYXDFiCia4nw8VOh0gjiFRf5I7LwQiMAzw/exec';
+      
+      // Format timestamp
+      const now = new Date();
+      const timestamp = `${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+  const formData = new FormData();
+  formData.append('timestamp', timestamp);
+  formData.append('userName', data.userName);
+  formData.append('timeTaken', data.timeTaken);
+  formData.append('score', data.score);
+  formData.append('feedback', 'No feedback for this test type.');
+
+  formData.append('testId', 'Test1'); // Or whatever identifies your current test
+
+  const response = await fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: formData
+  });
   
-      submitBtn.addEventListener('click', checkAnswers);
-      showAnswersBtn.addEventListener('click', toggleCorrectAnswers);
-  </script>
-</body>
-</html>
+  console.log('Data submitted successfully');
+  return true;
+} catch (error) {
+  console.error('Error submitting data:', error);
+  return false;
+}
+}
+
+</script></p>
+<!-- First, add the new button to the buttons container div -->
+<div class="buttons-container"><button id="leaderboard-btn" class="leaderboard-btn">Leaderboard</button></div>
+<!-- Add the leaderboard modal HTML -->
+<div id="leaderboard-modal" class="modal">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Leaderboard</h2>
+<span class="close">×</span></div>
+<div class="modal-header">
+    <div class="tab-container">
+      <button id="current-test-tab" class="tab-button active">This Test</button>
+      <button id="all-tests-tab" class="tab-button">All Tests</button>
+    </div>
+  </div>
+<div class="modal-body">
+<table id="leaderboard-table">
+<thead>
+<tr>
+<th>Rank</th>
+<th>Username</th>
+<th>Score</th>
+<th>More</th>
+</tr>
+</thead>
+<tbody id="leaderboard-body"><!-- Data will be populated here --></tbody>
+</table>
+</div>
+</div>
+</div>
