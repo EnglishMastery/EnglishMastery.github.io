@@ -1179,7 +1179,7 @@ return multipleChoiceComplete && fillBlanksComplete;
         // Display results
         resultsDiv.innerHTML = `
         Completion Time: ${formattedTime}<br>
-        Total Score: ${totalCorrect} out of ${totalQuestions} (${percentage}%)<br>
+        Correct Answers: ${totalCorrect} out of ${totalQuestions} (${percentage}%)<br>
         Multiple Choice: ${p1p2Result.correctRadioCount}/${p1p2Result.totalRadioQuestions}<br>
         Fill in the Blanks: ${p1p2Result.correctTextCount}/${p1p2Result.totalTextQuestions}<br>
         `;
@@ -1193,7 +1193,7 @@ return multipleChoiceComplete && fillBlanksComplete;
         completionMessage.innerHTML = `
         <h2>Quiz Completed!</h2> <br>
         <p>Time taken: ${formattedTime}</p>
-        <p>Score: ${percentage}%</p>
+        <p>Correct Answers: ${percentage}%</p>
         <br>
         <h3>Make sure to go through the test one more time to see the feedback!</h3>
         <div class="buttons-container" style="margin-top: 20px;">
@@ -1314,18 +1314,7 @@ return multipleChoiceComplete && fillBlanksComplete;
                 <td>${index + 1}</td>
                 <td>${entry.username}</td>
                 <td>${entry.score}</td>
-                <td>
-                    <button class="more-details" onclick="toggleDetails(${index})">More</button>
-                </td>
-                </tr>
-                <tr id="details-${index}" style="display: none;">
-                <td colspan="4">
-                    <div class="expanded-row">
-                    <p><strong>Time:</strong> ${entry.time}</p>
-                    <p><strong>Feedback:</strong></p>
-                    <p>${entry.feedback}</p>
-                    </div>
-                </td>
+                <td>${entry.time}</td>
                 </tr>
             `).join('');
         }
@@ -1455,8 +1444,8 @@ async function submitToGoogleSheets(data) {
 <tr>
 <th>Rank</th>
 <th>Username</th>
-<th>Score</th>
-<th>More</th>
+<th>Correct Answers%</th>
+<th>Test Duration</th>
 </tr>
 </thead>
 <tbody id="leaderboard-body"><!-- Data will be populated here --></tbody>
