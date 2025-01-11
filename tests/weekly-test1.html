@@ -823,17 +823,7 @@ function displayMasterLeaderboard(data) {
             <td>${index + 1}</td>
             <td>${entry.username}</td>
             <td>${entry.averagePercentage}%</td>
-            <td>
-                <button class="more-details" onclick="toggleMasterDetails(${index})">More</button>
-            </td>
-        </tr>
-        <tr id="master-details-${index}" style="display: none;">
-            <td colspan="4">
-                <div class="expanded-row">
-                    <p><strong>Average Time:</strong> ${entry.averageTime}</p>
-                    <p><strong>Tests Completed:</strong> ${entry.testsCount}</p>
-                </div>
-            </td>
+            <td>${entry.time}</td>
         </tr>
     `).join('');
 }
