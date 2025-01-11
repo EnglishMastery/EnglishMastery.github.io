@@ -823,15 +823,11 @@ function displayMasterLeaderboard(data) {
             <td>${index + 1}</td>
             <td>${entry.username}</td>
             <td>${entry.averagePercentage}%</td>
-            <td>${entry.time}</td>
+            <td>${entry.averageTime}</td>
         </tr>
     `).join('');
 }
-	
-function toggleMasterDetails(index) {
-    const detailsRow = document.getElementById(`master-details-${index}`);
-    detailsRow.style.display = detailsRow.style.display === 'none' ? 'table-row' : 'none';
-}
+
 
 // Helper function to format time
 function formatTime(totalSeconds) {
