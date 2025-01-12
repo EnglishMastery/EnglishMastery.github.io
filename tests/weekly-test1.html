@@ -747,9 +747,9 @@ async function fetchMasterLeaderboard() {
 
         const values = response.result.values;
         if (!values || values.length === 0) {
-            leaderboardBody.innerHTML = '<tr><td colspan="4">No data available</td></tr>';
-            return;
-        }
+                        leaderboardBody.innerHTML = '<tr><td colspan="4">There is no data here yet. Be the first to submit!</td></tr>';
+                        return;
+                    }
 
         // Process the data
         const processedData = processMasterLeaderboardData(values);
