@@ -803,7 +803,7 @@ function processMasterLeaderboardData(data) {
 
         return {
             username,
-            averagePercentage: (totalBestPercentage / data.totalTests).toFixed(1),
+            averagePercentage: Math.round(totalBestPercentage / data.totalTests),
             averageTime: formatTime(Math.round(totalBestTime / data.totalTests)),
             testsCount: data.totalTests
         };
