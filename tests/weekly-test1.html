@@ -820,6 +820,19 @@ function processMasterLeaderboardData(data) {
 
 function displayMasterLeaderboard(data) {
     const leaderboardBody = document.getElementById('leaderboard-body');
+    leaderboardBody.innerHTML = data.map((entry, index) => 
+        <tr class="rank-${index < 3 ? index + 1 : ''}">
+            <td>${index + 1}</td>
+            <td>${entry.username}</td>
+            <td>${entry.averagePercentage}%</td>
+            <td>${entry.averageTime}</td>
+        </tr>
+    ).join('');
+}
+
+
+function displayMasterLeaderboard(data) {
+    const leaderboardBody = document.getElementById('leaderboard-body');
     leaderboardBody.innerHTML = data.map((entry, index) => `
         <tr class="rank-${index < 3 ? index + 1 : ''}">
             <td>${index + 1}</td>
